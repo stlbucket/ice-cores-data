@@ -2,11 +2,16 @@ const clog = require('fbkt-clog');
 const dataPointQL = require('../graphql/dataPoint');
 const sampleQL = require('../graphql/sample');
 const iceCoreQL = require('../graphql/iceCore');
+const seriesQL = require('../graphql/series');
 
 function cleanAllIceCoreData(){
   return dataPointQL.deleteAll()
     .then(result => {
-      clog('DELETE DATA POINT RESULT', result);
+      clog('DATA POINT RESULT', result);
+      return seriesQL.deleteAll();
+    })
+    .then(result => {
+      clog('SERIES RESULT', result);
       return sampleQL.deleteAll();
     })
     .then(result => {

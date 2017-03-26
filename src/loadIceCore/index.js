@@ -5,6 +5,7 @@ const client = require('../graphql/client');
 const getReadStream = require('./getReadStream');
 const parseIceCoreDataToJson = require('./parseIceCoreDataToJson');
 const upsertDataPointTypes = require('./upsertDataPointTypes');
+const createSerieses = require('./createSerieses');
 const parseIceCoreToFinalJson = require('./parseIceCoreToFinalJson');
 const buildMutation = require('./buildMutation');
 
@@ -22,6 +23,14 @@ function loadIceCore(iceCoreInfo){
             dataPointTypes: dataPointTypes
           };
         })
+    })
+    .then(workspace => {
+      return createSerieses(workspace.dataPointTypes)
+        .then(serieses => {
+          return Object.assign(workspace, {
+            serieses: serieses
+          })
+        });
     })
     .then(workspace => {
       return parseIceCoreToFinalJson(workspace)
