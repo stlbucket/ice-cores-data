@@ -7,7 +7,7 @@ const assembleIceCoreMutation = require('./assembleIceCoreMutation');
 function buildIceCoreMutation(finalIceCoreJson){
   const mutation = assembleIceCoreMutation(finalIceCoreJson.name, finalIceCoreJson.samples.map(
     sample => {
-      return assembleSampleMutation(sample.dataPoints.map(
+      return assembleSampleMutation(sample, sample.dataPoints.map(
         dataPoint => {
           return assempleDataPointMutation(dataPoint);
         }

@@ -4,7 +4,7 @@ const expect = require('chai').expect;
 const clog = require('fbkt-clog');
 const target = require('./index');
 
-describe.skip('load core', function(){
+describe.only('load core', function(){
 
   it('load an ice core', function(done){
     this.timeout(10000);

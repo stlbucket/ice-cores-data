@@ -8,6 +8,7 @@ const upsertDataPointTypes = require('./upsertDataPointTypes');
 const createSerieses = require('./createSerieses');
 const parseIceCoreToFinalJson = require('./parseIceCoreToFinalJson');
 const buildMutation = require('./buildMutation');
+const associateSerieses = require('./associateSerieses');
 
 function loadIceCore(iceCoreInfo){
   return getReadStream(iceCoreInfo.filename)
@@ -50,9 +51,17 @@ function loadIceCore(iceCoreInfo){
     })
     .then(workspace => {
       return client.mutate(workspace.mutation)
-        .then(result => {
+        .then(iceCoreQL => {
           return Object.assign(workspace, {
-            finalResult: result
+            iceCoreQL: iceCoreQL.createIceCore
+          })
+        })
+    })
+    .then(workspace => {
+      return associateSerieses(workspace)
+        .then(seriesAssociations => {
+          return Object.assign(workspace, {
+            seriesAssociations: seriesAssociations
           })
         })
     })

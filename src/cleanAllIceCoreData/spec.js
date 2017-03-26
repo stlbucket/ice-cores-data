@@ -4,7 +4,7 @@ const expect = require('chai').expect;
 
 const target = require('./index');
 
-describe.only('your module', () => {
+describe.skip('your module', () => {
 
   it('should do something useful', function(done){
     this.timeout(10000);
