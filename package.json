@@ -11,12 +11,14 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.5.0",
-    "chai": "^3.5.0",
     "csv": "^1.1.1",
     "fbkt-clog": "^1.0.1",
     "lokka": "^1.7.0",
     "lokka-transport-http": "^1.6.1",
-    "mocha": "^3.2.0",
     "ramda": "^0.23.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
   }
 }

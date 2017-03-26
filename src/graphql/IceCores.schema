@@ -1,0 +1,54 @@
+﻿type DataPoint {
+  createdAt: DateTime!
+  dataPointType: DataPointType @relation(name: "DataPointTypeOnDataPoint")
+  id: ID!
+  sample: Sample @relation(name: "DataPointOnSample")
+  updatedAt: DateTime!
+  value: Float!
+}
+
+type DataPointType {
+  createdAt: DateTime!
+  dataPoints: [DataPoint!]! @relation(name: "DataPointTypeOnDataPoint")
+  id: ID!
+  name: String!
+  updatedAt: DateTime!
+}
+
+type File {
+  contentType: String!
+  createdAt: DateTime!
+  id: ID!
+  name: String!
+  secret: String!
+  size: Int!
+  updatedAt: DateTime!
+  url: String!
+}
+
+type IceCore {
+  createdAt: DateTime!
+  id: ID!
+  location: String
+  name: String!
+  samples: [Sample!]! @relation(name: "SampleOnIceCore")
+  updatedAt: DateTime!
+}
+
+type Sample {
+  bottomAge: Float
+  bottomDepth: Float
+  createdAt: DateTime!
+  dataPoints: [DataPoint!]! @relation(name: "DataPointOnSample")
+  iceCore: IceCore @relation(name: "SampleOnIceCore")
+  id: ID!
+  topAge: Float
+  topDepth: Float
+  updatedAt: DateTime!
+}
+
+type User {
+  createdAt: DateTime!
+  id: ID!
+  updatedAt: DateTime!
+}

@@ -3,5 +3,6 @@ module.exports = {
   deleteAll: require('./deleteAll'),
   deleteOne: require('./deleteOne'),
   getAll: require('./getAll'),
-  getByName: require('./getByName')
+  getByName: require('./getByName'),
+  upsert: require('./upsert')
 }

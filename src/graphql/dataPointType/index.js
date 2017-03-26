@@ -4,5 +4,6 @@ module.exports = {
   deleteOne: require('./deleteOne'),
   deleteBatch: require('./deleteBatch'),
   getAll: require('./getAll'),
-  getByName: require('./getByName')
+  getByName: require('./getByName'),
+  upsert: require('./upsert')
 }
