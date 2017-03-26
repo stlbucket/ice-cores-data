@@ -1,16 +1,19 @@
-const client = require('../../client')
+const clog      = require('fbkt-clog');
+const client    = require('../../client');
+const templates = require('../templates');
 
-function deleteDataPoint(id){
-  return client.mutate(`
-  {
-    deleteDataPoint(id: "${id}") {
-      id
-    } 
-  }
-`)
+function deleteEntity(entity) {
+  const mutation = `{${templates.deleteOne(entity)}}`;
+  return client.mutate(mutation)
     .then(result => {
-      return result.deleteDataPoint
+      return result[`delete${templates.entityName}`];
+    })
+    .catch(error => {
+      clog.error(`Unable to delete ${templates.entityName}`, {
+        [templates.entityName]: entity,
+        error: error
+      });
     })
 }
 
-module.exports = deleteDataPoint
+module.exports = deleteEntity;

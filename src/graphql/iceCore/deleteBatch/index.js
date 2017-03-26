@@ -2,15 +2,15 @@ const clog = require('fbkt-clog');
 const client = require('../../client');
 const templates = require('../templates');
 
-function createBatch(entities){
+function deleteBatch(entities){
 
-  const mutation = templates.createBatch(entities);
+  const mutation = templates.deleteBatch(entities);
 
   return client.mutate(mutation)
     .catch(error => {
-      clog(`Unable to create ${templates.entityName} batch`, error);
+      clog(`Unable to delete ${templates.entityName} batch`, error);
       throw error;
     });
 }
 
-module.exports = createBatch;
+module.exports = deleteBatch;

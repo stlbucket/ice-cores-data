@@ -1,18 +1,16 @@
-const Promise = require('bluebird')
-const getAllDataPoints = require('../getAll')
-const deleteDataPoint = require('../deleteOne')
+const getAllEntities = require('../getAll');
+const deleteBatch = require('../deleteBatch');
 
-function deleteAllDataPoints(){
-  return getAllDataPoints()
-    .then(allDataPoints => {
-      return Promise.map(
-        allDataPoints,
-        dataPoint => {
-          return deleteDataPoint(dataPoint.id)
-        }
-      )
+function deleteAllEntities(){
+  return getAllEntities()
+    .then(allEntities => {
+      return deleteBatch(allEntities);
     })
-    .catch((e) => console.error(e))
+    .catch(error => {
+      clog(`Unable to delete all ${templates.entityName}s`, error);
+      throw error;
+    });
+
 }
 
-module.exports = deleteAllDataPoints
+module.exports = deleteAllEntities;

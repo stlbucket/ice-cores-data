@@ -1,39 +1,16 @@
-const clog = require('fbkt-clog')
-const client = require('../../client')
+const clog = require('fbkt-clog');
+const client = require('../../client');
+const templates = require('../templates');
 
-function buildMutation(sample){
-  return `
-      ${sample.name}: createSample(
-        name:	"${sample.name}",
-        
-      ) {
-        id,
-        name
-      },
-`
-}
+function createBatch(entities){
 
-function createSample(samples){
-
-  const mutationSet = samples.reduce(
-    (acc, item) => {
-      const thisMutation = buildMutation(item);
-      return acc.concat(thisMutation)
-    },
-    ''
-  )
-
-  const mutation = `{
-${mutationSet}
-}`
-
-  console.log('MUTATION SET', mutation);
+  const mutation = templates.createBatch(entities);
 
   return client.mutate(mutation)
-    .then(result => {
-      clog('RESULT', result);
-      return result
-    })
+    .catch(error => {
+      clog(`Unable to create ${templates.entityName} batch`, error);
+      throw error;
+    });
 }
 
-module.exports = createSample
+module.exports = createBatch;

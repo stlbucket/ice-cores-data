@@ -2,14 +2,19 @@
 const expect = require('chai').expect;
 const uuid = require('uuid');
 
-const getAllIceCores = require('./index');
+const createDataPoint = require('./index');
 
 describe.skip(__filename, () => {
-  it('load a test iceCore', (done) => {
-    getAllIceCores()
+  it('load a test dataPoint', (done) => {
+    const testId = uuid.v4();
+    const dataPoint = {
+      name: `DataPoint-${testId}`
+    }
+
+    createDataPoint(dataPoint)
       .then(result => {
         console.log('RESULT', result)
-        expect(result).to.be.an('array')
+        expect(result).to.be.an('object')
         done();
       })
       .catch(error => {

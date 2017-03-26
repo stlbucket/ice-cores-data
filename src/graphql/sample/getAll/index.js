@@ -1,17 +1,17 @@
-const client = require('../../client')
+const clog = require('fbkt-clog');
+const client = require('../../client');
+const templates = require('../templates');
 
-function getAllSamples(){
-  return client.query(`
-  {
-    allSamples {
-      id,
-      name,
-    }
-  }
-`)
+function getAllEntities(){
+  const query = `{${templates.getAll()}}`;
+  return client.query(query)
     .then(result => {
-      return result.allSamples
+      return result[`all${templates.entityName}s`]
+    })
+    .catch(error => {
+      clog(`Unable to get all ${templates.entityName}s`);
+      throw error;
     })
 }
 
-module.exports = getAllSamples
+module.exports = getAllEntities;

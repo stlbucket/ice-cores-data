@@ -1,18 +1,18 @@
-const Promise = require('bluebird')
-const getAllSamples = require('../getAll')
-const deleteSample = require('../deleteOne')
+const clog = require('fbkt-clog');
+const templates = require('../templates');
+const getAllEntities = require('../getAll');
+const deleteBatch = require('../deleteBatch');
 
-function deleteAllSamples(){
-  return getAllSamples()
-    .then(allSamples => {
-      return Promise.map(
-        allSamples,
-        sample => {
-          return deleteSample(sample.id)
-        }
-      )
+function deleteAllEntities(){
+  return getAllEntities()
+    .then(allEntities => {
+      return deleteBatch(allEntities);
     })
-    .catch((e) => console.error(e))
+    .catch(error => {
+      clog(`Unable to delete all ${templates.entityName}s`, error);
+      throw error;
+    });
+
 }
 
-module.exports = deleteAllSamples
+module.exports = deleteAllEntities;

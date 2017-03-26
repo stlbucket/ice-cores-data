@@ -1,18 +1,18 @@
-const Promise = require('bluebird')
-const getAllIceCores = require('../getAll')
-const deleteIceCore = require('../deleteOne')
+const clog = require('fbkt-clog');
+const templates = require('../templates');
+const getAllEntities = require('../getAll');
+const deleteBatch = require('../deleteBatch');
 
-function deleteAllIceCores(){
-  return getAllIceCores()
-    .then(allIceCores => {
-      return Promise.map(
-        allIceCores,
-        iceCore => {
-          return deleteIceCore(iceCore.id)
-        }
-      )
+function deleteAllEntities(){
+  return getAllEntities()
+    .then(allEntities => {
+      return deleteBatch(allEntities);
     })
-    .catch((e) => console.error(e))
+    .catch(error => {
+      clog(`Unable to delete all ${templates.entityName}s`, error);
+      throw error;
+    });
+
 }
 
-module.exports = deleteAllIceCores
+module.exports = deleteAllEntities;

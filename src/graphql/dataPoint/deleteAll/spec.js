@@ -1,7 +1,6 @@
 'use strict';
 const expect = require('chai').expect;
 const uuid = require('uuid');
-
 const deleteAllDataPoints = require('./index');
 
 describe.skip(__filename, () => {
@@ -9,7 +8,7 @@ describe.skip(__filename, () => {
     deleteAllDataPoints()
       .then(result => {
         console.log('RESULT', result)
-        expect(result).to.be.an('array')
+        expect(result).to.be.an('object')
         done();
       })
       .catch(error => {

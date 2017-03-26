@@ -1,26 +1,20 @@
 const clog = require('fbkt-clog');
-const client = require('../../client')
+const client = require('../../client');
+const templates = require('../templates');
 
-function createDataPoint(dataPoint){
-  return client.mutate(`
-  {
-    createDataPoint(
-      name: "${dataPoint.name}"
-    ) {
-      id,
-      name
-    }
-  }
-`)
+function createEntity(entity){
+  const mutation = `{${templates.createOne(entity)}}`;
+
+  return client.mutate(mutation)
     .then(result => {
-      return result.createDataPoint
+      return result[`create${templates.entityName}`];
     })
     .catch(error => {
-      clog.error('CANNOT CREATE DATA POINT', {
-        dataPoint: dataPoint,
+      clog.error(`Unable to create ${templates.entityName}`, {
+        [templates.entityName]: entity,
         error: error
       });
     })
 }
 
-module.exports = createDataPoint
+module.exports = createEntity;

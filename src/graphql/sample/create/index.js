@@ -1,26 +1,20 @@
 const clog = require('fbkt-clog');
-const client = require('../../client')
+const client = require('../../client');
+const templates = require('../templates');
 
-function createSample(sample){
-  return client.mutate(`
-  {
-    createSample(
-      name: "${sample.name}"
-    ) {
-      id,
-      name
-    }
-  }
-`)
+function createEntity(entity){
+  const mutation = `{${templates.createOne(entity)}}`;
+
+  return client.mutate(mutation)
     .then(result => {
-      return result.createSample
+      return result[`create${templates.entityName}`];
     })
     .catch(error => {
-      clog.error('CANNOT CREATE SAMPLE', {
-        sample: sample,
+      clog.error(`Unable to create ${templates.entityName}`, {
+        [templates.entityName]: entity,
         error: error
       });
     })
 }
 
-module.exports = createSample
+module.exports = createEntity;

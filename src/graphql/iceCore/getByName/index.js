@@ -1,24 +1,19 @@
-const clog =require('fbkt-clog')
-const client = require('../../client')
+const clog = require('fbkt-clog');
+const client    = require('../../client');
+const templates = require('../templates');
 
-function getIceCoreByName(name){
-  return client.query(`
-  {
-    IceCore (name: "${name}") {
-      id,
-      name
-    }
-  }
-`)
+function getEntityByName(name) {
+  const query = `{${templates.getByName(name)}}`;
+  console.log('query', query);
+
+  return client.query(query)
     .then(result => {
-      return result.IceCore
+      return result[`${templates.entityName}`]
     })
     .catch(error => {
-      clog.error('CANNOT GET ICECORE', {
-        name: name,
-        error: error
-      })
+      clog(`Unable to get ${templates.entityName} by name`, name);
+      throw error;
     })
 }
 
-module.exports = getIceCoreByName
+module.exports = getEntityByName;

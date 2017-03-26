@@ -2,15 +2,15 @@ const clog = require('fbkt-clog');
 const getByName = require('../getByName');
 const create = require('../create');
 
-function upsertIceCore(iceCore){
-  return getByName(iceCore.name)
+function upsertEntity(entity){
+  return getByName(entity.name)
     .then(existing => {
       if (existing) {
         return existing;
       } else {
-        return create(iceCore);
+        return create(entity);
       }
     })
 }
 
-module.exports = upsertIceCore;
+module.exports = upsertEntity;

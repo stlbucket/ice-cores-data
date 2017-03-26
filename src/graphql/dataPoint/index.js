@@ -2,6 +2,6 @@ module.exports = {
   create: require('./create'),
   deleteAll: require('./deleteAll'),
   deleteOne: require('./deleteOne'),
-  getAll: require('./getAll'),
-  getByName: require('./getByName')
+  deleteBatch: require('./deleteBatch'),
+  getAll: require('./getAll')
 }

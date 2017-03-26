@@ -1,12 +1,14 @@
-module.exports = function(iceCore){
+function applyTemplate(iceCore){
   return `
-  {
     createIceCore(
-      name: "${iceCore.name}"
+      value: ${iceCore.value},
+      iceCoreTypeId: "${iceCore.iceCoreTypeId}"
     ) {
       id,
-      name
+      value,
+      iceCoreTypeId
     }
-  }
-`
+  `
 };
+
+module.exports = applyTemplate;

@@ -5,7 +5,7 @@ const uuid = require('uuid');
 const getAllDataPoints = require('./index');
 
 describe.skip(__filename, () => {
-  it('load a test dataPoint', (done) => {
+  it('get all', (done) => {
     getAllDataPoints()
       .then(result => {
         console.log('RESULT', result)
